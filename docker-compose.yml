@@ -1,0 +1,52 @@
+version: "3"
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend
+    ports:
+      - 3001:3001
+    volumes:
+      - ./backend:/usr/src/app
+    env_file:
+      - ./backend/src/configs/env/development.env
+    depends_on:
+      - postgres
+    networks:
+      - edify-network
+
+  frontend:
+    image: node:20-alpine
+    container_name: frontend
+    working_dir: /usr/src/app
+    command: ["yarn", "dev"]
+    expose:
+      - 3000
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/usr/src/app:rw
+    depends_on:
+      - backend
+
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=edify
+      - POSTGRES_EXTENSIONS=pg_trgm
+    ports:
+      - "5432:5432"
+    #volumes:
+    #  - .data/:/var/lib/postgresql/data
+    networks:
+      - edify-network
+
+networks:
+  edify-network:
+    driver: bridge

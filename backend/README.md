@@ -16,11 +16,17 @@ Para clonar o repositorio `<teste-edify>`, siga estas etapas:
 git clone https://github.com/viniciusgoliver/teste-edify.git
 ```
 
-Para iniciar o projeto `<teste-edify>`, siga estas etapas:
+Para instalar as dependencias `<teste-edify>`, siga estas etapas:
 
 ```bash
-docker-compose up -d --build
+yarn
 ```
+
+## ⚙️ Configurando ambiente `<teste-edify>`
+
+Utilizar o arquivo `src/config/env/example.env` como base para a criação do seguinte arquivo de configuração:
+
+- `development.env`
 
 > Aplicação utiliza schema de validação `src/config/validation/validation.ts`, caso não sejam providas a configurações requeridas, resultará em erro.
 

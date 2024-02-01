@@ -1,0 +1,29 @@
+generator client {
+  provider        = "prisma-client-js"
+  binaryTargets   = ["native", "linux-musl-arm64-openssl-3.0.x"]
+  previewFeatures = ["tracing"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Livro {
+  id                String    @id @default(uuid())
+  idExterno         String    @unique
+  titulo            String    @unique
+  descricao         String?
+  autor             String?
+  qtdPaginas        Int?      @default(10)
+  miniatura         String?
+  avaliacao         Int?      @default(5)
+  opiniao           String?
+  dataInicioLeitura DateTime?
+  dataFimLeitura    DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  deletedAt         DateTime?
+
+  @@map("livro")
+}
